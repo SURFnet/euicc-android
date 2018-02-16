@@ -1,66 +1,41 @@
-
-Android HorizontalPaging Sample
+Android ICC Tool
 ===================================
 
-This sample shows how to implement tabs, using Fragments and a ViewPager.
+This app allows you to test Android Lollipop TelephonyManager ICC functions
 
 Introduction
 ------------
 
-This sample implements tabs using the deprecated [ActionBar.TabListener][1]. It uses [ViewPager][2] and
-[FragmentPagerAdapter][3] to handle swiping between tabs and displaying the selected tab content.
+1. With the "BASIC" Tab you can test the [iccTransmitApduBasicChannel][1] function
+2. With the "SIM_IO" Tab you can test the [iccExchangeSimIO][2] function
 
-
-1. Create an Activity that extends [FragmentActivity][4], with a [ViewPager][2] for its layout.
-2. Implement [ActionBar.TabListener][1] interface.
-3. Create a class that extends [FragmentPagerAdapter][3] and override its `getItem(int position)`,
-`getCount()` and `getPageTitle(int position)` methods.
-4. In the `onCreate(Bundle savedInstanceState)` method of your activity, set navigation mode to tabs for the
-ActionBar using `setNavigationMode(ActionBar.NAVIGATION_MODE_TABS)`. Note: This is DEPRECATED as of Android
-Lollipop.
-5. Set your custom [FragmentPagerAdapter][3] on your [ViewPager][2].
-6. Implement `setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener())` on your [ViewPager][2] to
-know the selected tab, so you can update your ActionBar with `setSelectedNavigationItem(position)`.
-
-[1]: http://developer.android.com/reference/android/support/v7/app/ActionBar.TabListener.html
-[2]: http://developer.android.com/reference/android/support/v4/view/ViewPager.html
-[3]: http://developer.android.com/reference/android/support/v4/app/FragmentPagerAdapter.html
-[4]: http://developer.android.com/reference/android/support/v4/app/FragmentActivity.html
+[1]: https://developer.android.com/reference/android/telephony/TelephonyManager.html#iccTransmitApduBasicChannel(int,%20int,%20int,%20int,%20int,%20java.lang.String)
+[2]: https://developer.android.com/reference/android/telephony/TelephonyManager.html#iccExchangeSimIO(int,%20int,%20int,%20int,%20int,%20java.lang.String)
 
 Pre-requisites
 --------------
 
 - Android SDK 26
-- Android Build Tools v26.0.1
+- Android Build Tools v27.0.2
 - Android Support Repository
+
+Installation
+-------------
+For now the app must be installed as a privileged app
+
+`adb remount`  
+`adb push Application-release.apk /system/priv-app/telephonytest.apk`  
+`adb reboot`  
 
 Screenshots
 -------------
 
 <img src="screenshots/1-tab1.png" height="400" alt="Screenshot"/> <img src="screenshots/2-tab2.png" height="400" alt="Screenshot"/> 
 
-Getting Started
----------------
-
-This sample uses the Gradle build system. To build this project, use the
-"gradlew build" command or use "Import Project" in Android Studio.
-
-Support
--------
-
-- Google+ Community: https://plus.google.com/communities/105153134372062985968
-- Stack Overflow: http://stackoverflow.com/questions/tagged/android
-
-If you've found an error in this sample, please file an issue:
-https://github.com/googlesamples/android-HorizontalPaging
-
-Patches are encouraged, and may be submitted by forking this project and
-submitting a pull request through GitHub. Please see CONTRIBUTING.md for more details.
-
 License
 -------
 
-Copyright 2017 The Android Open Source Project, Inc.
+Copyright 2017 SURFnet
 
 Licensed to the Apache Software Foundation (ASF) under one or more contributor
 license agreements.  See the NOTICE file distributed with this work for
