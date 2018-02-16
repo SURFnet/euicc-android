@@ -21,7 +21,8 @@ Pre-requisites
 
 Installation
 -------------
-For now the app must be installed as a privileged app
+For now the app must be installed as a privileged app, After building the release version (Build->Generate Signed APK...)
+run these commands at a command prompt:
 
 `adb remount`  
 `adb push Application-release.apk /system/priv-app/telephonytest.apk`  
@@ -30,7 +31,7 @@ For now the app must be installed as a privileged app
 Screenshots
 -------------
 
-<img src="screenshots/1-tab1.png" height="400" alt="Screenshot"/> <img src="screenshots/2-tab2.png" height="400" alt="Screenshot"/> 
+<img src="screenshots/1-tab1.jpg height="400" alt="Screenshot"/> <img src="screenshots/2-tab2.jpg" height="400" alt="Screenshot"/> 
 
 License
 -------
