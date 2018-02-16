@@ -31,7 +31,7 @@ run these commands at a command prompt:
 Screenshots
 -------------
 
-<img src="screenshots/1-tab1.jpg" height="400" alt="Screenshot"/> <img src="screenshots/2-tab2.jpg" height="400" alt="Screenshot"/> 
+<img src="screenshots/1-tab1.jpg" height="600" alt="Screenshot"/> <img src="screenshots/2-tab2.jpg" height="600" alt="Screenshot"/> 
 
 License
 -------
