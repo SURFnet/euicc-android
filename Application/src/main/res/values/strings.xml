@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="action_settings">Settings</string>
+    <string name="title_section1">Basic</string>
+    <string name="title_section2">SIM_IO</string>
+    <string name="cla">CLA</string>
+    <string name="instruction">Instruction</string>
+    <string name="p1">P1</string>
+    <string name="p2">P2</string>
+    <string name="p3">P3</string>
+    <string name="data">Data</string>
+    <string name="fileid">File ID</string>
+    <string name="command">Command</string>
+    <string name="filepath">File path</string>
+</resources>

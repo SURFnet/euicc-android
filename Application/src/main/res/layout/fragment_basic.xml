@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/scrollView1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    <android.support.v7.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CLA" />
+        <EditText
+            android:id="@+id/cla"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/cla" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Instruction" />
+        <EditText
+            android:id="@+id/instruction"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/instruction" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/p1" />
+        <EditText
+            android:id="@+id/basic_p1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/p1" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/p2" />
+        <EditText
+            android:id="@+id/basic_p2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/p2" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/p3" />
+        <EditText
+            android:id="@+id/basic_p3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/p3" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/data" />
+        <EditText
+            android:id="@+id/data"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/data" />
+        <TextView
+            android:id="@+id/basic_response"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/basic_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            app:srcCompat="@android:drawable/ic_dialog_email" />
+    </android.support.v7.widget.LinearLayoutCompat>
+</ScrollView>
