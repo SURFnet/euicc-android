@@ -1,8 +1,6 @@
 package nl.mansoft.icc.icctool;
 
-import android.Manifest;
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -12,6 +10,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
+import android.telephony.IccOpenLogicalChannelResponse;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -161,12 +160,17 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
             // getItem is called to instantiate the fragment for the given page.
             // Return a DummySectionFragment (defined as a static inner class
             // below) with the page number as its lone argument.
-            Fragment fragment;
-            if (position == 0) {
-                fragment = new BasicSectionFragment();
-
-            } else {
-                fragment = new SimIoSectionFragment();
+            Fragment fragment = null;
+            switch (position) {
+                case 0:
+                    fragment = new BasicSectionFragment();
+                    break;
+                case 1:
+                    fragment = new SimIoSectionFragment();
+                    break;
+                case 2:
+                    fragment = new LogicalSectionFragment();
+                    break;
             }
             //Bundle args = new Bundle();
             //args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, position + 1);
@@ -184,7 +188,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         @Override
         public int getCount() {
             // Show 2 total pages.
-            return 2;
+            return 3;
         }
         // END_INCLUDE (fragment_pager_adapter_getcount)
 
@@ -203,6 +207,8 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
                     return getString(R.string.title_section1).toUpperCase(l);
                 case 1:
                     return getString(R.string.title_section2).toUpperCase(l);
+                case 2:
+                    return getString(R.string.title_section3).toUpperCase(l);
             }
             return null;
         }
@@ -226,7 +232,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_basic, container, false);
-            FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.basic_fab);
+            FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -244,11 +250,12 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
                     Log.d(TAG, "data: " + data);
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
-                    String response = "No MODIFY_PHONE_STATE permission";
-
-                    if (getActivity().checkSelfPermission(Manifest.permission.MODIFY_PHONE_STATE) == PackageManager.PERMISSION_GRANTED) {
+                    String response;
+                    try {
                         TelephonyManager telephonyManager = (TelephonyManager) getActivity().getSystemService(Context.TELEPHONY_SERVICE);
                         response = telephonyManager.iccTransmitApduBasicChannel(cla, instruction, p1, p2, p3, data);
+                    } catch (Exception e) {
+                        response = e.getMessage();
                     }
                     Log.d(TAG, "iccTransmitApduBasicChannel response: " + response);
                     mResponse.setText(response);
@@ -256,11 +263,11 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
             });
             mCla = (EditText) rootView.findViewById(R.id.cla);
             mInstruction = (EditText) rootView.findViewById(R.id.instruction);
-            mP1 = (EditText) rootView.findViewById(R.id.basic_p1);
-            mP2 = (EditText) rootView.findViewById(R.id.basic_p2);
-            mP3 = (EditText) rootView.findViewById(R.id.basic_p3);
+            mP1 = (EditText) rootView.findViewById(R.id.p1);
+            mP2 = (EditText) rootView.findViewById(R.id.p2);
+            mP3 = (EditText) rootView.findViewById(R.id.p3);
             mData = (EditText) rootView.findViewById(R.id.data);
-            mResponse = (TextView) rootView.findViewById(R.id.basic_response);
+            mResponse = (TextView) rootView.findViewById(R.id.response);
             return rootView;
         }
     }
@@ -293,7 +300,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_simio, container, false);
-            FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.simio_fab);
+            FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -311,12 +318,13 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
                     Log.d(TAG, "data: " + filepath);
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
-                    String response = "No MODIFY_PHONE_STATE permission";
-
-                    if (getActivity().checkSelfPermission(Manifest.permission.MODIFY_PHONE_STATE) == PackageManager.PERMISSION_GRANTED) {
+                    String response;
+                    try {
                         TelephonyManager telephonyManager = (TelephonyManager) getActivity().getSystemService(Context.TELEPHONY_SERVICE);
                         byte[] b = telephonyManager.iccExchangeSimIO(fileid, command, p1, p2, p3, filepath);
                         response = bytesToHex(b);
+                    } catch (Exception e) {
+                        response = e.getMessage();
                     }
                     Log.d(TAG, "iccExchangeSimIO response: " + response);
                     mResponse.setText(response);
@@ -324,13 +332,99 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
             });
             mFileId = (EditText) rootView.findViewById(R.id.fileid);
             mCommand = (EditText) rootView.findViewById(R.id.command);
-            mP1 = (EditText) rootView.findViewById(R.id.simio_p1);
-            mP2 = (EditText) rootView.findViewById(R.id.simio_p2);
-            mP3 = (EditText) rootView.findViewById(R.id.simio_p3);
+            mP1 = (EditText) rootView.findViewById(R.id.p1);
+            mP2 = (EditText) rootView.findViewById(R.id.p2);
+            mP3 = (EditText) rootView.findViewById(R.id.p3);
             mFilePath = (EditText) rootView.findViewById(R.id.filepath);
-            mResponse = (TextView) rootView.findViewById(R.id.simio_response);
+            mResponse = (TextView) rootView.findViewById(R.id.response);
             return rootView;
         }
     }
 
+    public static class LogicalSectionFragment extends Fragment {
+        private final String TAG = MainActivity.class.getName();
+        private EditText mAID;
+        private EditText mCla;
+        private EditText mInstruction;
+        private EditText mP1;
+        private EditText mP2;
+        private EditText mP3;
+        private EditText mData;
+        private TextView mResponse;
+        private final static char[] hexArray = "0123456789ABCDEF".toCharArray();
+
+
+        public LogicalSectionFragment() {
+        }
+
+        public static byte[] hexStringToByteArray(String s) {
+            int len = s.length();
+            byte[] data = new byte[len / 2];
+            for (int i = 0; i < len; i += 2) {
+                data[i / 2] = (byte) ((Character.digit(s.charAt(i), 16) << 4)
+                        + Character.digit(s.charAt(i+1), 16));
+            }
+            return data;
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_logical, container, false);
+            FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String aid = mAID.getText().toString();;
+                    Log.d(TAG, "AID: " + aid);
+                    int cla = parseHex(mCla);
+                    Log.d(TAG, "cla: " + cla);
+                    int instruction = parseHex(mInstruction);
+                    Log.d(TAG, "instruction: " + instruction);
+                    int p1 = parseHex(mP1);
+                    Log.d(TAG, "p1: " + p1);
+                    int p2 = parseHex(mP2);
+                    Log.d(TAG, "p2: " + p2);
+                    int p3 = parseHex(mP3);
+                    Log.d(TAG, "p3: " + p3);
+                    String data = mData.getText().toString();
+                    Log.d(TAG, "data: " + data);
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+                    String response;
+                    try {
+                        TelephonyManager telephonyManager = (TelephonyManager) getActivity().getSystemService(Context.TELEPHONY_SERVICE);
+                        // Open channel
+                        IccOpenLogicalChannelResponse iccOpenLogicalChannelResponse = telephonyManager.iccOpenLogicalChannel(aid);
+                        int channel = iccOpenLogicalChannelResponse.getChannel();
+                        Log.d(TAG, "channel: " + channel);
+                        // select AID
+                        response = telephonyManager.iccTransmitApduLogicalChannel (channel,0x01, 0xA4, 0x04, 0x00, aid.length() / 2, aid);
+                        Log.d(TAG, "response1: " + response);
+                        if (response.endsWith("9000")) {
+                            response = telephonyManager.iccTransmitApduLogicalChannel (channel, cla, instruction, p1, p2, p3, data);
+                            if (response.endsWith("9000")) {
+                                response = new String(hexStringToByteArray(response.substring(0, response.length() - 4)));
+                            }
+                            Log.d(TAG, "response2: " + response);
+                        }
+                        telephonyManager.iccCloseLogicalChannel(channel);
+                    } catch (Exception e) {
+                        response = e.getMessage();
+                    }
+                    Log.d(TAG, "iccOpenLogicalChannel response: " + response);
+                    mResponse.setText(response);
+                }
+            });
+            mAID = (EditText) rootView.findViewById(R.id.aid);
+            mCla = (EditText) rootView.findViewById(R.id.cla);
+            mInstruction = (EditText) rootView.findViewById(R.id.instruction);
+            mP1 = (EditText) rootView.findViewById(R.id.p1);
+            mP2 = (EditText) rootView.findViewById(R.id.p2);
+            mP3 = (EditText) rootView.findViewById(R.id.p3);
+            mData = (EditText) rootView.findViewById(R.id.data);
+            mResponse = (TextView) rootView.findViewById(R.id.response);
+            return rootView;
+        }
+    }
 }
