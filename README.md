@@ -8,6 +8,7 @@ Introduction
 
 1. With the "BASIC" Tab you can test the [iccTransmitApduBasicChannel][1] function
 2. With the "SIM_IO" Tab you can test the [iccExchangeSimIO][2] function
+3. With the "JAVA" Tab you can launch a javacard applet by it's AID and pass parameters in cla, instruction, p1, p2, p3 and Data
 
 [1]: https://developer.android.com/reference/android/telephony/TelephonyManager.html#iccTransmitApduBasicChannel(int,%20int,%20int,%20int,%20int,%20java.lang.String)
 [2]: https://developer.android.com/reference/android/telephony/TelephonyManager.html#iccExchangeSimIO(int,%20int,%20int,%20int,%20int,%20java.lang.String)
