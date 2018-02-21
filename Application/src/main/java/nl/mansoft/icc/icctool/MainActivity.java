@@ -163,13 +163,13 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
             Fragment fragment = null;
             switch (position) {
                 case 0:
-                    fragment = new BasicSectionFragment();
+                    fragment = new AdpuSectionFragment();
                     break;
                 case 1:
                     fragment = new SimIoSectionFragment();
                     break;
                 case 2:
-                    fragment = new LogicalSectionFragment();
+                    fragment = new JavaSectionFragment();
                     break;
             }
             //Bundle args = new Bundle();
@@ -215,8 +215,9 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         // END_INCLUDE (fragment_pager_adapter_getpagetitle)
     }
 
-    public static class BasicSectionFragment extends Fragment {
+    public static class AdpuSectionFragment extends Fragment {
         private final String TAG = MainActivity.class.getName();
+        private EditText mChannel;
         private EditText mCla;
         private EditText mInstruction;
         private EditText mP1;
@@ -225,17 +226,19 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         private EditText mData;
         private TextView mResponse;
 
-        public BasicSectionFragment() {
+        public AdpuSectionFragment() {
         }
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_basic, container, false);
+            View rootView = inflater.inflate(R.layout.fragment_apdu, container, false);
             FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    int channel = mChannel.getText().toString().isEmpty() ? -1 : parseHex(mChannel);
+                    Log.d(TAG, "channel: " + channel);
                     int cla = parseHex(mCla);
                     Log.d(TAG, "cla: " + cla);
                     int instruction = parseHex(mInstruction);
@@ -248,12 +251,10 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
                     Log.d(TAG, "p3: " + p3);
                     String data = mData.getText().toString();
                     Log.d(TAG, "data: " + data);
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
                     String response;
                     try {
                         TelephonyManager telephonyManager = (TelephonyManager) getActivity().getSystemService(Context.TELEPHONY_SERVICE);
-                        response = telephonyManager.iccTransmitApduBasicChannel(cla, instruction, p1, p2, p3, data);
+                        response = channel == -1 ? telephonyManager.iccTransmitApduBasicChannel(cla, instruction, p1, p2, p3, data) : telephonyManager.iccTransmitApduLogicalChannel(channel, cla, instruction, p1, p2, p3, data);
                     } catch (Exception e) {
                         response = e.getMessage();
                     }
@@ -261,6 +262,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
                     mResponse.setText(response);
                 }
             });
+            mChannel = (EditText) rootView.findViewById(R.id.channel);
             mCla = (EditText) rootView.findViewById(R.id.cla);
             mInstruction = (EditText) rootView.findViewById(R.id.instruction);
             mP1 = (EditText) rootView.findViewById(R.id.p1);
@@ -316,8 +318,6 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
                     Log.d(TAG, "p3: " + p3);
                     String filepath = mFilePath.getText().toString();
                     Log.d(TAG, "data: " + filepath);
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
                     String response;
                     try {
                         TelephonyManager telephonyManager = (TelephonyManager) getActivity().getSystemService(Context.TELEPHONY_SERVICE);
@@ -341,7 +341,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         }
     }
 
-    public static class LogicalSectionFragment extends Fragment {
+    public static class JavaSectionFragment extends Fragment {
         private final String TAG = MainActivity.class.getName();
         private EditText mAID;
         private EditText mCla;
@@ -354,7 +354,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         private final static char[] hexArray = "0123456789ABCDEF".toCharArray();
 
 
-        public LogicalSectionFragment() {
+        public JavaSectionFragment() {
         }
 
         public static byte[] hexStringToByteArray(String s) {
@@ -370,7 +370,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_logical, container, false);
+            View rootView = inflater.inflate(R.layout.fragment_java, container, false);
             FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -389,30 +389,33 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
                     Log.d(TAG, "p3: " + p3);
                     String data = mData.getText().toString();
                     Log.d(TAG, "data: " + data);
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
                     String response;
                     try {
                         TelephonyManager telephonyManager = (TelephonyManager) getActivity().getSystemService(Context.TELEPHONY_SERVICE);
-                        // Open channel
+                        // Open channel and select aid
                         IccOpenLogicalChannelResponse iccOpenLogicalChannelResponse = telephonyManager.iccOpenLogicalChannel(aid);
-                        int channel = iccOpenLogicalChannelResponse.getChannel();
-                        Log.d(TAG, "channel: " + channel);
-                        // select AID
-                        response = telephonyManager.iccTransmitApduLogicalChannel (channel,0x01, 0xA4, 0x04, 0x00, aid.length() / 2, aid);
-                        Log.d(TAG, "response1: " + response);
-                        if (response.endsWith("9000")) {
-                            response = telephonyManager.iccTransmitApduLogicalChannel (channel, cla, instruction, p1, p2, p3, data);
+                        int status = iccOpenLogicalChannelResponse.getStatus();
+                        if (status == IccOpenLogicalChannelResponse.STATUS_NO_ERROR) {
+                            int channel = iccOpenLogicalChannelResponse.getChannel();
+                            Log.d(TAG, "channel: " + channel);
+                            response = telephonyManager.iccTransmitApduLogicalChannel(channel, cla, instruction, p1, p2, p3, data);
+                            Log.d(TAG, "response1: " + response);
                             if (response.endsWith("9000")) {
+                                // convert response data to ASCII
                                 response = new String(hexStringToByteArray(response.substring(0, response.length() - 4)));
+                                Log.d(TAG, "response2: " + response);
                             }
-                            Log.d(TAG, "response2: " + response);
+                            if (!telephonyManager.iccCloseLogicalChannel(channel)) {
+                                Log.e(TAG, "Error closing logical channel");
+                            }
+                        } else {
+                            response = "Error opening logical channel, status: " + status;
+                            Log.e(TAG, response);
                         }
-                        telephonyManager.iccCloseLogicalChannel(channel);
                     } catch (Exception e) {
-                        response = e.getMessage();
+                        response = "Exception: " + e.getMessage();
+                        Log.e(TAG, response);
                     }
-                    Log.d(TAG, "iccOpenLogicalChannel response: " + response);
                     mResponse.setText(response);
                 }
             });

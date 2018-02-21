@@ -2,9 +2,10 @@
 <resources>
 
     <string name="action_settings">Settings</string>
-    <string name="title_section1">Basic</string>
+    <string name="title_section1">ADPU</string>
     <string name="title_section2">SIM_IO</string>
     <string name="title_section3">Java</string>
+    <string name="channel">Channel</string>
     <string name="cla">CLA</string>
     <string name="instruction">Instruction</string>
     <string name="p1">P1</string>

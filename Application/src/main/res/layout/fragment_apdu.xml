@@ -5,69 +5,94 @@
     android:id="@+id/scrollView1"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
+
     <android.support.v7.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="CLA" />
+            android:text="@string/channel" />
+
+        <EditText
+            android:id="@+id/channel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/channel" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cla" />
+
         <EditText
             android:id="@+id/cla"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/cla" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Instruction" />
+            android:text="@string/instruction" />
+
         <EditText
             android:id="@+id/instruction"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/instruction" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/p1" />
+
         <EditText
             android:id="@+id/p1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/p1" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/p2" />
+
         <EditText
             android:id="@+id/p2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/p2" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/p3" />
+
         <EditText
             android:id="@+id/p3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/p3" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/data" />
+
         <EditText
             android:id="@+id/data"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/data" />
+
         <TextView
             android:id="@+id/response"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            />
+            android:layout_height="wrap_content" />
+
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab"
             android:layout_width="wrap_content"

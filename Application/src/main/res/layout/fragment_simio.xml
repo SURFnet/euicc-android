@@ -5,69 +5,83 @@
     android:id="@+id/scrollView2"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
+
     <android.support.v7.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/fileid" />
+
         <EditText
             android:id="@+id/fileid"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/fileid" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/command" />
+
         <EditText
             android:id="@+id/command"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/command" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/p1" />
+
         <EditText
             android:id="@+id/p1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/p1" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/p2" />
+
         <EditText
             android:id="@+id/p2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/p2" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/p3" />
+
         <EditText
             android:id="@+id/p3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/p3" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/filepath" />
+
         <EditText
             android:id="@+id/filepath"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/filepath" />
+
         <TextView
             android:id="@+id/response"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            />
+            android:layout_height="wrap_content" />
+
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab"
             android:layout_width="wrap_content"
