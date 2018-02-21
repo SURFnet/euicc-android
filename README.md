@@ -6,7 +6,7 @@ This app allows you to test Android Lollipop TelephonyManager ICC functions
 Introduction
 ------------
 
-1. With the "ADPU" Tab you can test the [iccTransmitApduBasicChannel][1] and [iccTransmitApduLogicalChannel][2] functions
+1. With the "APDU" Tab you can test the [iccTransmitApduBasicChannel][1] and [iccTransmitApduLogicalChannel][2] functions
 2. With the "SIM_IO" Tab you can test the [iccExchangeSimIO][3] function
 3. With the "JAVA" Tab you can launch a javacard applet by it's AID and pass parameters in cla, instruction, p1, p2, p3 and Data
 
