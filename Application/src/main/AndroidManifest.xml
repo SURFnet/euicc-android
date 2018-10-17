@@ -19,7 +19,6 @@
     package="nl.mansoft.icc.icctool"
     android:versionCode="1"
     android:versionName="1.0" >
-    <uses-permission android:name="android.permission.MODIFY_PHONE_STATE"/>
 
     <!-- While ViewPager will work on API 4 or above, tabs require an ActionBar. ActionBar is only
          available in API 11 or above. -->

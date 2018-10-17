@@ -222,7 +222,6 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         private EditText mInstruction;
         private EditText mP1;
         private EditText mP2;
-        private EditText mP3;
         private EditText mData;
         private TextView mResponse;
 
@@ -247,10 +246,9 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
                     Log.d(TAG, "p1: " + p1);
                     int p2 = parseHex(mP2);
                     Log.d(TAG, "p2: " + p2);
-                    int p3 = parseHex(mP3);
-                    Log.d(TAG, "p3: " + p3);
                     String data = mData.getText().toString();
                     Log.d(TAG, "data: " + data);
+                    int p3 = data.length() / 2;
                     String response;
                     try {
                         TelephonyManager telephonyManager = (TelephonyManager) getActivity().getSystemService(Context.TELEPHONY_SERVICE);
@@ -267,7 +265,6 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
             mInstruction = (EditText) rootView.findViewById(R.id.instruction);
             mP1 = (EditText) rootView.findViewById(R.id.p1);
             mP2 = (EditText) rootView.findViewById(R.id.p2);
-            mP3 = (EditText) rootView.findViewById(R.id.p3);
             mData = (EditText) rootView.findViewById(R.id.data);
             mResponse = (TextView) rootView.findViewById(R.id.response);
             return rootView;
@@ -348,7 +345,6 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         private EditText mInstruction;
         private EditText mP1;
         private EditText mP2;
-        private EditText mP3;
         private EditText mData;
         private TextView mResponse;
         private final static char[] hexArray = "0123456789ABCDEF".toCharArray();
@@ -385,10 +381,9 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
                     Log.d(TAG, "p1: " + p1);
                     int p2 = parseHex(mP2);
                     Log.d(TAG, "p2: " + p2);
-                    int p3 = parseHex(mP3);
-                    Log.d(TAG, "p3: " + p3);
                     String data = mData.getText().toString();
                     Log.d(TAG, "data: " + data);
+                    int p3 = data.length() / 2;
                     String response;
                     try {
                         TelephonyManager telephonyManager = (TelephonyManager) getActivity().getSystemService(Context.TELEPHONY_SERVICE);
@@ -424,7 +419,6 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
             mInstruction = (EditText) rootView.findViewById(R.id.instruction);
             mP1 = (EditText) rootView.findViewById(R.id.p1);
             mP2 = (EditText) rootView.findViewById(R.id.p2);
-            mP3 = (EditText) rootView.findViewById(R.id.p3);
             mData = (EditText) rootView.findViewById(R.id.data);
             mResponse = (TextView) rootView.findViewById(R.id.response);
             return rootView;
