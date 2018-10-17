@@ -8,12 +8,7 @@ Introduction
 
 1. With the "APDU" Tab you can test the [iccTransmitApduBasicChannel][1] and [iccTransmitApduLogicalChannel][2] functions
 2. With the "SIM_IO" Tab you can test the [iccExchangeSimIO][3] function
-3. With the "JAVA" Tab you can launch a javacard applet by it's AID and pass parameters in cla, instruction, p1, p2, p3 and Data
-
-[1]: https://developer.android.com/reference/android/telephony/TelephonyManager.html#iccTransmitApduBasicChannel(int,%20int,%20int,%20int,%20int,%20java.lang.String)
-[2]:
-https://developer.android.com/reference/android/telephony/TelephonyManager.html#iccTransmitApduLogicalChannel(int,%20int,%20int,%20int,%20int,%20int,%20java.lang.String)
-[3]: https://developer.android.com/reference/android/telephony/TelephonyManager.html#iccExchangeSimIO(int,%20int,%20int,%20int,%20int,%20java.lang.String)
+3. With the "JAVA" Tab you can launch a javacard applet by it's AID and pass parameters in cla, instruction, p1, p2, and Data
 
 Pre-requisites
 --------------
@@ -21,15 +16,7 @@ Pre-requisites
 - Android SDK 26
 - Android Build Tools v27.0.2
 - Android Support Repository
-
-Installation
--------------
-For now the app must be installed as a privileged app, After building the release version (Build->Generate Signed APK...)
-run these commands at a command prompt:
-
-`adb remount`  
-`adb push Application-release.apk /system/priv-app/telephonytest.apk`  
-`adb reboot`  
+- ARA-M applet which supports [UICC Carrier Privileges][4] to be delivered soon
 
 Screenshots
 -------------
@@ -57,3 +44,11 @@ distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
 WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
 License for the specific language governing permissions and limitations under
 the License.
+
+[1]: https://developer.android.com/reference/android/telephony/TelephonyManager.html#iccTransmitApduBasicChannel(int,%20int,%20int,%20int,%20int,%20java.lang.String)
+[2]:
+https://developer.android.com/reference/android/telephony/TelephonyManager.html#iccTransmitApduLogicalChannel(int,%20int,%20int,%20int,%20int,%20int,%20java.lang.String)
+[3]: https://developer.android.com/reference/android/telephony/TelephonyManager.html#iccExchangeSimIO(int,%20int,%20int,%20int,%20int,%20java.lang.String)
+[4]:
+https://source.android.com/devices/tech/config/uicc
+
